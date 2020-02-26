@@ -1,0 +1,48 @@
+public class MergeSort {
+    public static void main(String[] args) {
+        int[] Array = {5, 2, 4, 6, 1, 3, 2, 6};
+        Array = Sort(Array);
+        for (int i = 0; i < Array.length; i++)
+            System.out.print(Array[i] + " ");
+    }
+
+    private static int[] Sort(int[] MyArray) {
+        if (MyArray.length == 1)
+            return MyArray;
+        else {
+            int half = (int) Math.floor(MyArray.length / 2);
+            int [] half1 = new int[half];
+            int [] half2 = new int[MyArray.length - half];
+            for (int i = 0; i < MyArray.length; i++) {
+                if (i < half)
+                    half1[i] = MyArray[i];
+                else
+                    half2[i - half] = MyArray[i];
+            }
+            half1 = Sort(half1);
+            half2 = Sort(half2);
+            MyArray = SortNext(half1, half2);
+            return MyArray;
+        }
+    }
+    private static int[] SortNext(int[] A, int[] B) {
+        int[] C = new int [A.length + B.length];
+        int a = 0, b = 0;
+        for (int i = 0; i < A.length + B.length; i++) {
+            if (a == A.length) {
+                C[i] = B[b];
+                b++;
+            }else if (b == B.length) {
+                C[i] = A[a];
+                a++;
+            }else if (A[a] > B[b]) {
+                C[i] = B[b];
+                b++;
+            }else {
+                C[i] = A[a];
+                a++;
+            }
+        }
+        return C;
+    }
+}
